@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>a little secret ♡</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cream: #fffaf6;
+  --pink: #e2a6b5;
+  --rose: #b9758b;
+  --text: #74535d;
+  --muted: #a99198;
+  --line: #ead7d9;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: .45;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  background: #f5dce3;
+  top: -90px;
+  left: -90px;
+}
+
+body::after {
+  background: #f5e9dc;
+  right: -90px;
+  bottom: -90px;
+}
+
+.page {
+  width: min(90%, 440px);
+  margin: auto;
+  padding: 35px 0 28px;
+  text-align: center;
+}
+
+.top {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.frame {
+  position: relative;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.58);
+  padding: 38px 25px;
+  box-shadow: 0 20px 65px rgba(112,71,83,.05);
+}
+
+.frame::before,
+.frame::after {
+  content: "✧";
+  position: absolute;
+  color: var(--pink);
+  font-size: 20px;
+}
+
+.frame::before { top: 11px; left: 14px; }
+.frame::after { bottom: 11px; right: 14px; }
+
+.label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(42px, 11vw, 53px);
+  line-height: 1;
+  margin: 22px 0 17px;
+}
+
+h1 em {
+  color: var(--rose);
+  font-weight: 400;
+}
+
+.subtitle {
+  font-size: 11px;
+  font-weight: 300;
+  color: #9d838b;
+  line-height: 2;
+}
+
+.envelope-area {
+  height: 155px;
+  display: grid;
+  place-items: center;
+  margin: 18px 0 12px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.envelope {
+  width: 145px;
+  height: 95px;
+  position: relative;
+  background: #e8bbc6;
+  border: 1px solid #d6a0af;
+  box-shadow: 0 12px 25px #bc85931b;
+}
+
+.envelope .back {
+  position: absolute;
+  inset: 0;
+  background: #f3d6dc;
+  clip-path: polygon(0 0,50% 56%,100% 0);
+  z-index: 3;
+}
+
+.envelope .front {
+  position: absolute;
+  inset: 0;
+  background: #dca6b5;
+  clip-path: polygon(0 100%,50% 45%,100% 100%);
+  z-index: 2;
+}
+
+.seal {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: #fff9f5;
+  font-size: 24px;
+  z-index: 4;
+}
+
+.btn {
+  display: inline-block;
+  background: #d9a0af;
+  color: white;
+  border: 1px solid #ce91a2;
+  padding: 15px 24px;
+  font-family: inherit;
+  font-size: 9px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.btn:hover {
+  background: #bd7e91;
+  transform: translateY(-2px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 4px;
+}
+
+.footer {
+  margin-top: 25px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #b29ba1;
+}
+
+#letter {
+  display: none;
+  text-align: left;
+  animation: reveal 1s ease both;
+}
+
+.letter-title {
+  text-align: center;
+}
+
+.letter-title h1 {
+  font-size: 43px;
+}
+
+.heart {
+  text-align: center;
+  color: var(--rose);
+  font-size: 30px;
+  margin: 25px 0;
+  animation: pulse 2s infinite;
+}
+
+.message {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  line-height: 1.85;
+  color: #765660;
+  margin-top: 25px;
+}
+
+.signature {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--rose);
+  line-height: 1.6;
+  margin-top: 35px;
+}
+
+#hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.float-heart {
+  position: absolute;
+  bottom: -30px;
+  color: #d9a0af;
+  animation: rise 5s linear forwards;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.12); }
+}
+
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: .8; }
+  100% { transform: translateY(-110vh) rotate(40deg); opacity: 0; }
+}
+
+@media(max-width:380px) {
+  .frame { padding: 34px 18px; }
+  .message { font-size: 18px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div id="hearts"></div>
+
+<main class="page">
+  <div class="top">a little secret, just for you ♡</div>
+
+  <section class="frame" id="intro">
+    <div class="label">sealed with a little courage</div>
+
+    <h1>To someone<br><em>special.</em></h1>
+
+    <p class="subtitle">
+      There's something I've been wanting<br>
+      to tell you before this year ends.
+    </p>
+
+    <div class="envelope-area" aria-hidden="true">
+      <div class="envelope">
+        <div class="back"></div>
+        <div class="front"></div>
+        <div class="seal">♡</div>
+      </div>
+    </div>
+
+    <p class="subtitle">
+      A little honesty, a little courage,<br>
+      and a letter meant just for you.
+    </p>
+
+    <button class="btn" id="openBtn">OPEN YOUR LETTER ♡</button>
+  </section>
+
+  <section class="frame" id="letter" aria-live="polite">
+    <div class="letter-title">
+      <div class="label">from my heart to you</div>
+      <div class="heart">♡</div>
+    </div>
+
+    <div class="message" id="message"></div>
+
+    <div class="signature">
+      with a little courage,<br>
+      someone who was supposed to keep it a secret ♡
+    </div>
+
+    <div class="footer" style="text-align:center">
+      THANK YOU FOR READING ♡
+    </div>
+  </section>
+
+  <div class="footer">made with a little courage & lots of heart</div>
+</main>
+
+<script>
+const confession = `hi, irish!
+
+honestly, i don't really know how to start this, but i guess i'll just let my heart do the talking for once.
+
+first of all, i know we don't really know each other that well. we're not close, and we mostly just see each other at lpc. you're a friend of my friend, and that's pretty much how we know of each other. so i understand if this confession comes as a surprise to you. HAHAHA.
+
+to be honest, i never really planned to confess my feelings to you.
+
+melody has warned me several times that you're straight, and i know she's probably just looking out for me. i know that you don't like girls that way, and i'm aware that the chances of you feeling the same way about me are very unlikely.
+
+i even told her that i would build my walls and make sure i wouldn't confess to you. i promised myself that i would keep my feelings to myself because i knew what the situation was, and i didn't want to end up expecting something that might never happen.
+
+but here i am, doing the exact opposite of what i promised her. HAHAHA.
+
+funny how i was so determined not to confess, yet here i am, writing a whole letter just to tell you how i feel. i guess my walls weren't as strong as i thought they were. ♡
+
+i honestly don't know exactly when or how i started liking you. we barely talk, we haven't really gotten to know each other personally, and we don't have that many interactions. but somehow, i found myself noticing you, and eventually, i realized that i liked you.
+
+maybe it's unexpected. maybe it's a little silly to confess to someone i barely know. but i guess feelings don't always come at the right time, and sometimes, they happen even when you know there's a big possibility that nothing will ever come out of them.
+
+i'm not telling you this because i expect you to like me back. i'm not asking you to change your feelings, question who you are, or give me a chance just because i like you. i respect you and your feelings, and i understand that you might never see me in that way.
+
+i think that's one of the reasons why it took me a while to decide whether i should do this or not. i kept reminding myself of what melody told me, and i kept telling myself that i shouldn't even try because i already knew the answer.
+
+but then i realized that i didn't want another year to end with me keeping something to myself just because i was too afraid to say it.
+
+so, before this year ends, i want to do this one thing for myself. i want to be honest about my feelings, even if i'm not sure what will happen after this.
+
+i know we barely know each other, and i'm not expecting this confession to suddenly change anything between us. i don't expect us to become close overnight, either. but if you're ever comfortable with it, i'd be happy to get to know you better, even just as friends. no pressure, no expectations.
+
+and if you don't feel the same way, that's completely okay. you don't owe me anything just because i confessed. you don't have to feel guilty, and you don't have to force yourself to respond in a certain way just to protect my feelings.
+
+i just hope things won't become awkward whenever we happen to see each other at lpc. HAHAHA. i'd still respect you the same way, and i wouldn't want you to feel uncomfortable around me because of this.
+
+maybe this confession won't lead to anything. maybe after reading this, things will stay exactly the same. and honestly, i'm prepared for that possibility.
+
+at least i'll know that i was brave enough to say what i wanted to say instead of spending more time wondering what would have happened if i had just been honest.
+
+i told melody that i would build my walls so i wouldn't confess my feelings to you.
+
+but here i am, letting those walls down just this once, because i wanted you to know.
+
+i like you. ♡
+
+and even if you never feel the same way, i'm not going to regret being honest about it. having feelings for you doesn't mean i'm entitled to anything from you. it simply means that, for some reason, you became someone i wanted to tell the truth to.
+
+so, yeah. this is me finally letting it out before the year ends.
+
+thank you for taking the time to read this entire letter. i know it might be unexpected, and i appreciate you giving it a moment of your time.
+
+you don't have to give me an answer right away. whatever you feel, i'll respect it.
+
+i know you're probably not going to like me the way i like you, but i guess i just wanted to say it at least once.
+
+no expectations. no pressure. just an honest confession from someone who finally decided to be brave.
+
+and if there's one thing i want you to remember after reading this, it's that you don't have to feel the same way for my feelings to have been genuine.
+
+before this year ends, i just wanted you to know that it was you. ♡`;
+
+document.getElementById("openBtn").addEventListener("click", function () {
+  document.getElementById("message").textContent = confession;
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("letter").style.display = "block";
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  for (let i = 0; i < 30; i++) {
+    setTimeout(makeHeart, i * 110);
+  }
+});
+
+function makeHeart() {
+  const heart = document.createElement("span");
+  heart.className = "float-heart";
+  heart.textContent = ["♡", "♥", "✧", "୨ৎ"][
+    Math.floor(Math.random() * 4)
+  ];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+  document.getElementById("hearts").appendChild(heart);
+  setTimeout(() => heart.remove(), 6500);
+}
+</script>
+</body>
+</html>
